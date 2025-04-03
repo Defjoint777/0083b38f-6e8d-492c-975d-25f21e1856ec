@@ -1,51 +1,127 @@
 <!---
 {
-  "depends_on": [],
+  "depends_on": ["https://github.com/STEMgraph/0b6b3ce8-418e-4900-ae42-a6d068389a12"],
   "author": "Stephan Bökelmann",
-  "first_used": "2025-03-17",
-  "keywords": ["learning", "exercises", "education", "practice"]
+  "first_used": "2025-004-03",
+  "keywords": ["C Language", "math.h", "mappings"]
 }
 --->
 
-# Learning Through Exercises
+# Implementing Mathematical Mappings
 
 ## 1) Introduction
-Learning by doing is one of the most effective methods to acquire new knowledge and skills. Rather than passively consuming information, actively engaging in problem-solving fosters deeper understanding and long-term retention. By working through structured exercises, students can grasp complex concepts in a more intuitive and applicable way. This approach is particularly beneficial in technical fields like programming, mathematics, and engineering.
 
-### 1.1) Further Readings and Other Sources
-- [The Importance of Practice in Learning](https://www.sciencedirect.com/science/article/pii/S036013151300062X)
-- "The Art of Learning" by Josh Waitzkin
-- [How to Learn Effectively: 5 Key Strategies](https://www.edutopia.org/article/5-research-backed-learning-strategies)
+The basic purpose of computing machines is to perform calculations — but not merely in the abstract sense of manipulating symbols or solving equations as in pure mathematics. Instead, we compute by **evaluating expressions** — structured combinations of values, variables, and operators that yield concrete results.
+
+In programming, expressions are ubiquitous. They form:
+
+- arithmetic operations like `x + y`
+- function calls like `sqrt(x*x + y*y)`
+- logical comparisons like `x > 0`
+- assignments like `result = f(x)`
+
+A **mapping** in mathematics defines a transformation: it takes input from a *domain* and produces output in a *codomain*. In C, we encode such mappings as **functions**, constrained by the available types.
+
+For instance, the mathematical mapping:
+
+```
+f: ℕ₀ → ℕ₀,  f(x) = ⌊x / 2⌋ + ⌊x / 4⌋
+```
+
+can be translated to C as:
+
+```c
+unsigned int f(unsigned int x) {
+    return (x / 2) + (x / 4);
+}
+```
+
+Calling this function produces a deterministic result for any valid input in its domain:
+
+```c
+unsigned int result = f(10);  // evaluates to 5 + 2 = 7
+```
+
+Understanding how types like `unsigned int`, `int`, and `float` represent different mathematical sets (ℕ₀, ℤ, ℝ) is crucial when modeling computations in C.
 
 ## 2) Tasks
-1. **Write a Summary**: Summarize the concept of "learning by doing" in 3-5 sentences.
-2. **Example Identification**: List three examples from your own experience where learning through exercises helped you understand a topic better.
-3. **Create an Exercise**: Design a simple exercise for a topic of your choice that someone else could use to practice.
-4. **Follow an Exercise**: Find an online tutorial that includes exercises and complete at least two of them.
-5. **Modify an Existing Exercise**: Take a basic problem from a textbook or online course and modify it to make it slightly more challenging.
-6. **Pair Learning**: Explain a concept to a partner and guide them through an exercise without giving direct answers.
-7. **Review Mistakes**: Look at an exercise you've previously completed incorrectly. Identify why the mistake happened and how to prevent it in the future.
-8. **Time Challenge**: Set a timer for 10 minutes and try to solve as many simple exercises as possible on a given topic.
-9. **Self-Assessment**: Create a checklist to evaluate your own performance in completing exercises effectively.
-10. **Reflect on Progress**: Write a short paragraph on how this structured approach to exercises has influenced your learning.
 
-<details>
-  <summary>Tip for Task 5</summary>
-  Try making small adjustments first, such as increasing the difficulty slightly or adding an extra constraint.
-</details>
+1. **Interpret the Signature**:\
+   Given the C function:
+
+   ```c
+   unsigned int f(unsigned int x) {
+       return (x / 2) + (x / 4);
+   }
+   ```
+
+   - What domain and codomain does this correspond to mathematically?
+
+2. **Implement Mathematical Mappings**:\
+   Write the following functions in C:
+
+   - **Function g**
+
+     ```
+     g(x, y) = ⌊(x + y) / 3⌋ + ⌊(x + y) / 5⌋   for x, y ∈ ℕ₀
+     ```
+
+   - **Function h**
+
+     ```
+     h(x, y, z) = √(x² + y² + z²)   for x, y, z ∈ ℤ
+     ```
+
+     Use the `sqrtf()` function from `math.h`. Make sure, to add the `-lm` flag when compiling, otherwise the Linker won't find the library!
+
+3. \*\*Call in \*\*:\
+   In your `main()` function, call the above implementations with meaningful example values and print their outputs using `printf`.
+
+4. **Investigate the Limits**:\
+   Use `printf("%u\n", UINT_MAX);` to print the largest `unsigned int` value. What happens if you try to evaluate `f(UINT_MAX)`? Does the function still behave as expected?
+
+5. **Compose Mappings**:\
+   Compute and print:
+
+   ```c
+   unsigned int a = g(6, 9);
+   float distance = h(a, 3, 4);
+   printf("Distance: %.2f\n", distance);
+   ```
+
+6. **Overflow Detection**:\
+   Add an input check to `g` that prints a warning if `x + y` would overflow an `unsigned int`. Use:
+
+   ```c
+   if (x > UINT_MAX - y) {
+       printf("Overflow!\n");
+   }
+   ```
 
 ## 3) Questions
-1. What are the main benefits of learning through exercises compared to passive learning?
-2. How do exercises improve long-term retention?
-3. Can you think of a subject where learning through exercises might be less effective? Why?
-4. What role does feedback play in learning through exercises?
-5. How can self-designed exercises improve understanding?
-6. Why is it beneficial to review past mistakes in exercises?
-7. How does explaining a concept to someone else reinforce your own understanding?
-8. What strategies can you use to stay motivated when practicing with exercises?
-9. How can timed challenges contribute to learning efficiency?
-10. How do exercises help bridge the gap between theory and practical application?
+
+1. What is the practical difference between `int`, `unsigned int`, and `float` in terms of the mathematical sets they represent?
+2. What happens when a value overflows in an `unsigned int` operation?
+3. Why do we use floor (⌊ ⌋) in the mathematical definition, but not explicitly in C?
+4. How does the C compiler resolve the types of arithmetic expressions involving different types (e.g. `int` and `float`)?
+5. Can a function in C map from a pair like `(int, float)` to a `double`? Write such a function.
 
 ## 4) Advice
-Practice consistently and seek out diverse exercises that challenge different aspects of a topic. Combine exercises with reflection and feedback to maximize your learning efficiency. Don't hesitate to adapt exercises to fit your own needs and ensure that you're actively engaging with the material, rather than just going through the motions.
+
+Use the `-Wall -Wextra` flags when compiling with `gcc` to catch warnings. Link the math library with `-lm` if you’re using mathematical functions like `sqrt()`. Always consider the range of your input and output types — and use `limits.h` to get constants like `UINT_MAX`.
+
+To visualize mappings, it can help to draw a simple input-output table:
+
+| x  | f(x) |
+| -- | ---- |
+| 4  | 4    |
+| 8  | 8    |
+| 12 | 12   |
+| 16 | 16   |
+
+This reinforces the idea that **functions are mappings** and C lets us *implement* them with concrete data types.
+
+---
+
+Happy coding, and may your mappings never overflow!
 
