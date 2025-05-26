@@ -101,11 +101,18 @@ Understanding how types like `unsigned int`, `int`, and `float` represent differ
 ## 3) Questions
 
 1. What is the practical difference between `int`, `unsigned int`, and `float` in terms of the mathematical sets they represent?
-2. What happens when a value overflows in an `unsigned int` operation?
-3. Why do we use floor (⌊ ⌋) in the mathematical definition, but not explicitly in C?
-4. How does the C compiler resolve the types of arithmetic expressions involving different types (e.g. `int` and `float`)?
-5. Can a function in C map from a pair like `(int, float)` to a `double`? Write such a function.
-
+   int allows to use negative values, unsigned int can store twice as big values and can be combinated with float type.
+3. What happens when a value overflows in an `unsigned int` operation?
+   "reset" of value and starting to count from 0.
+5. Why do we use floor (⌊ ⌋) in the mathematical definition, but not explicitly in C?
+   because in c we can just cast any positive value in int and get whats floor is doing .
+7. How does the C compiler resolve the types of arithmetic expressions involving different types (e.g. `int` and `float`)?
+   compiler just takes a look for type of biggest value and the output comes with the same type.
+9. Can a function in C map from a pair like `(int, float)` to a `double`? Write such a function.
+double c(int a, float b)
+{
+return a + b;
+}
 ## 4) Advice
 
 Use the `-Wall -Wextra` flags when compiling with `gcc` to catch warnings. Link the math library with `-lm` if you’re using mathematical functions like `sqrt()`. Always consider the range of your input and output types — and use `limits.h` to get constants like `UINT_MAX`.
